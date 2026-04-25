@@ -1,0 +1,62 @@
+{
+    "save": {
+        "uname": "xDarinox",
+        "userID": 1245,
+        "accountID": 12,
+        "password": "$2y$10$xuwdmJDipwC3mONeg1hnYOjXCwLDZAs4W618cwg.RGkDrSapfu6US",
+        "email": "a21pdHJvZmFub3YyMDA2QGdtYWlsLmNvbQ",
+        "game": {
+            "seconds": 517,
+            "points": 0,
+            "sessions": 0,
+            "total-points-collected": 1
+        }
+    },
+    "config": {
+        "name": "xDarinox Launcher",
+        "developer": "xDarinox",
+        "version": "1.0.0-alpha",
+        "platform": "Windows",
+        "pc-name": "XDARINOX-PC",
+        "pc-username": "Kirill",
+        "architecture": "x64",
+        "platform-version": 10,
+        "php-parser-path": "src\\api\\client\\scripts\\parser.exe",
+        "app-root-path": "C:\\Users\\Kirill\\Downloads\\xDarinox-Manger-v1.00",
+        "appPathEXE": "C:\\Users\\Kirill\\Downloads\\xDarinox-Manger-v1.00\\xDarinoxLauncher.exe",
+        "gamePathEXE": "C:\\Users\\Kirill\\Downloads\\xDarinox-Manger-v1.00\\game\\xDarinoxGDPS.exe",
+        "game-data-folder-path": "C:\\Users\\Kirill\\AppData\\Local\\xDarinoxGDPS",
+        "command_line_switches": {
+            "disable-gpu": "",
+            "disable-features": "ChromeWhatsNewUI"
+        },
+        "context_menu": {
+    "enable_menu": false,
+    "navigation": false,
+    "print": false,
+    "view_source": false,
+    "open_in_external_browser": false
+}
+    },
+    "settings": {
+        "windowSizes": [
+            0,
+            0
+        ],
+        "minimum-size": [
+            0,
+            0
+        ],
+        "maximum-size": [
+            0,
+            0
+        ],
+        "isDisableMaximizeButton": null,
+        "isCenterLaunch": null,
+        "isFullscreen": null,
+        "isMaximumSize": null,
+        "isLaunchOnTop": null,
+        "interface-font": "-",
+        "isDevTools": null
+    }
+}

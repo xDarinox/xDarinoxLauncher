@@ -1,0 +1,26 @@
+import fmt from '../../api/utils/libfmt.js';
+
+let Save = class {
+    clear() {
+        localStorage.clear()
+    }
+
+    get(key) {
+        return (localStorage.getItem(key) != null) ? localStorage.getItem(key) : null
+    }
+
+    set(key, value) {
+        localStorage.setItem(key, value)
+        document.cookie = fmt('%s=%s; max-age=315360000; path=/; SameSite=Lax; Secure', key, value)
+    }
+
+    update(key, value) {
+        this.set(key, value)
+    }
+
+    delete(key) {
+        localStorage.removeItem(key)
+        document.cookie = fmt('%s=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;', key)
+    }
+}
+export default new Save

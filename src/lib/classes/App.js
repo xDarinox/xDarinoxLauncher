@@ -1,0 +1,277 @@
+//import m_data from '../../data.json' with { type: 'json' }
+import cApp from '../../api/client/classes/cApp.js';
+import fmt from '../../api/utils/libfmt.js';
+import Animation from '../../api/client/classes/cAnimation.js'
+import Element from '../../api/client/classes/cElement.js'
+import Notification from './Notification.js'
+import Utils from './Utils.js'
+
+let m_date = new Date()
+//m_data.save.time_in_game
+let _TOTAL_IN_GAME_SECONDS = 0
+let _CURRENT_IN_GAME_SECONDS = 0
+let _CURRENT_IN_GAME_MINUTES = 0
+let _CURRENT_IN_GAME_HOURS = 0
+let _INTERVAL_COUNTER = null
+
+let app = class {
+    getArchitecture() {
+        
+       // return m_data.config.architecture
+    }
+
+    getVersion() {
+      //  return m_data.config.version
+    }
+
+    getOS() {
+      //  return m_data.config.os
+    }
+
+    getName() {
+       // return m_data.config.title
+    }
+
+    getDeveloperName() {
+      //  return m_data.config.developer
+    }
+
+    getWinSize() {
+        return { width: window.innerWidth, height: window.innerHeight }
+    }
+
+    getHeaderSize() {
+        let header = document.getElementById('app-header')
+        return { width: header.clientWidth, height: header.clientHeight }
+    }
+
+    getGamePath() {
+      //  return m_data.config.game_exe_path
+    }
+
+    getAppFolderPath() {
+       // return m_data.config.app_root_path
+    }
+
+    load() {
+        window.addEventListener('load', (event) => {
+            console.log(cApp.name);
+            let _SAVE = this.filesystem().getSaveFile();
+        console.warn(_SAVE)
+            this.setLog(this.getFormatLogString(this.constructor.name, 'Приложение запущено на компьютере'))
+            // if(m_data.settings.start_fullscreen || m_data.settings.start_maximized) {
+            //     new Element().getElementByID('m_app-setting-x-win').addClass('m_disabled-setting')
+            //     new Element().getElementByID('m_app-setting-y-win').addClass('m_disabled-setting')
+            // }
+
+            new Element().getElementByID('m_serverLayer-zcx-full-label').setText(fmt('Время в игре:%s%s%s',
+                Math.floor(_TOTAL_IN_GAME_SECONDS / 3600) != 0 ? fmt(' %iч.', Math.floor(_TOTAL_IN_GAME_SECONDS / 3600)) : '',
+                Math.floor((_TOTAL_IN_GAME_SECONDS % 3600) / 60) != 0 ? fmt(' %iмин.', Math.floor((_TOTAL_IN_GAME_SECONDS % 3600) / 60)) : '',
+                _TOTAL_IN_GAME_SECONDS % 60 != 0 ? fmt(' %iсек.', _TOTAL_IN_GAME_SECONDS % 60) : ' --:--:--'
+            ))
+           // console.log(fmt('%02i.%02i.%04i.log', m_date.getDate(), m_date.getMonth() + 1, m_date.getFullYear()))
+           // console.warn(this.filesystem().getFileLog(fmt('%02i.%02i.%04i', m_date.getDate(), m_date.getMonth() + 1, m_date.getFullYear())))
+            // new Element().getElementByID('m_enable-maximize-button-window-checkbox').setClick(m_data.settings.disable_maximize_button)
+            // new Element().getElementByID('m_top-window-checkbox').setClick(m_data.settings.launch_on_top)
+            // new Element().getElementByID('m_center-window-checkbox').setClick(m_data.settings.centerize_launch)
+            // new Element().getElementByID('m_full-screen-window-checkbox').setClick(m_data.settings.start_fullscreen || m_data.settings.start_maximized)
+            // new Element().getElementByID('m_setting-value-1001').setText(m_data.save.user.uname)
+            // //new Element().getElementByID('m_setting-value-1002').setText(Utils.maskPassword(atob(data.save.password)))
+            // new Element().getElementByID('m_setting-value-1003').setText(Utils.maskEmail(atob(m_data.save.user.email)))
+            // new Element().getElementByID('m_setting-value-1004').setValue(this.getGamePath())
+            // new Element().getElementByID('m_y-windowsize-slider').setValue(m_data.settings.window__size[1])
+            // new Element().getElementByID('m_y-windowsize-label').setText(m_data.settings.window__size[1])
+            // new Element().getElementByID('m_x-windowsize-slider').setValue(m_data.settings.window__size[0])
+            // new Element().getElementByID('m_x-windowsize-label').setText(m_data.settings.window__size[0])
+            // //new Element().getElementByID('m_consoleLayer-log-field').setValue(this.filesystem().getFileContent(fmt('%02i.%02i.%04i.log', m_date.getDate(), m_date.getMonth() + 1, m_date.getFullYear())))
+            // new Element().getElementByID('m_app-menu-info-label').setHTML(fmt('Версия: v%s</br>ОС: %s</br>Архитектура: %s', this.getVersion(), this.getOS(), this.getArchitecture()))
+
+            let m_seconds = 60
+            let m_logger = document.getElementById('m_consoleLayer-log-field')
+            let m_timer = new Element().getElementByID('m_consoleLayer-time-label')
+            
+            setInterval(() => m_timer.setText(fmt('Cохранение через: 00:%02i', m_seconds--)), 1000)
+
+            setInterval(() => {
+                m_seconds = 60
+                m_timer.setText('Cохранение через: 01:00')
+                this.saveLog(m_logger.value)
+            }, 60000)
+            
+        })
+    }
+
+    onReload() {
+        window.close()
+        this.filesystem().openPathEXE(m_data.config.app_exe_path)
+    }
+
+    onRefresh() {
+        window.location.href = fmt('%s?t=%i', window.location.pathname, Date.now())
+    }
+
+    onQuit() {
+        window.close()
+    }
+
+    settings() {
+        return {
+            get: (value = '') => {
+                var response = ''
+                $.ajax({
+                    url: '/../data.json',
+                    method: 'GET',
+                    data: {},
+                    async: false,
+                    success: (responseText) => {response = responseText}
+                })
+
+                if(value === '') return response
+            },
+
+            set: (key = '', value = '') => {
+                if(key != '' && value != '') {
+                    var data = {}
+                    data[key] = value
+
+                    fetch(fmt('api/main/cUpdateAppData.php?%s', new URLSearchParams(data).toString()))
+                    this.setLog(this.getFormatLogString(this.constructor.name, fmt('Update setting value: %s', new URLSearchParams(data).toString())))
+                }
+            }
+        }
+    }
+
+    filesystem() {
+        return {
+            openAppFolder: (folderName) => {
+                fetch(fmt('api/main/cFileSystem.php?folderName=%s&fileFormat=%s&hook=%s', folderName, 'folder', 'folder_app'))
+            },
+
+            openPathFolder: (path) => {
+                fetch(fmt('api/main/cFileSystem.php?path=%s&fileFormat=%s&hook=%s', path, 'folder', 'folder_path'))
+            },
+
+            openPathEXE: (path) => {
+                fetch(fmt('api/main/cFileSystem.php?path=%s&fileFormat=%s&hook=%s&type=%s', path, 'exe', 'file_path', 'open'))
+            },
+
+            closePathEXE: (path) => {
+                fetch(fmt('api/main/cFileSystem.php?path=%s&fileFormat=%s&hook=%s&type=%s', path, 'exe', 'file_path', 'close'))
+            },
+
+            getFileLog: (fileName) => {
+                var response = ''
+                $.ajax({
+                    url: fmt('/../../%s.log', fileName),
+                    method: 'GET',
+                    data: {},
+                    async: false,
+                    success: (responseText) => {response = responseText}
+                })
+
+                return response
+            },
+
+            getSaveFile: () => {
+                var response = ''
+                $.ajax({
+                    url: 'api/saves',
+                    method: 'GET',
+                    data: {},
+                    async: false,
+                    success: (responseText) => {response = responseText}
+                })
+                return JSON.parse(response)
+            }
+        }
+    }
+
+
+    game() {
+        return {
+            onLaunch: () => {
+                Notification.create('success', 'Сервер запущен! Приятной игры :)', 3)
+                new Element().getElementByID('m_app-launch-gdps').addClass('m_hideElement')
+                new Element().getElementByID('m_app-launch-gdps').removeClass('m_showElement')
+                new Element().getElementByID('m_app-stop-gdps').addClass('m_showElement')
+                this.filesystem().openPathEXE(this.getGamePath())
+                this.setLog(this.getFormatLogString(this.constructor.name, fmt('Launched GDPS \'%s\'', this.getGamePath())))
+                _INTERVAL_COUNTER = setInterval(this.game().startTimer, 1000)
+            },
+
+            onExit: () => {
+                clearInterval(_INTERVAL_COUNTER)
+                _CURRENT_IN_GAME_SECONDS = 0
+                new Element().getElementByID('m_app-launch-gdps').addClass('m_showElement')
+                new Element().getElementByID('m_app-stop-gdps').removeClass('m_showElement')
+                new Element().getElementByID('m_app-stop-gdps').addClass('m_hideElement')
+                this.filesystem().closePathEXE(this.getGamePath())
+                this.setLog(this.getFormatLogString(this.constructor.name, fmt('Closed GDPS \'%s\'', this.getGamePath())))
+                new Element().getElementByID('m_serverLayer-zcx-full-label').setText(fmt('Время в игре:%s%s%s',
+                    Math.floor(_TOTAL_IN_GAME_SECONDS / 3600) != 0 ? fmt(' %iч.', Math.floor(_TOTAL_IN_GAME_SECONDS / 3600)) : '',
+                    Math.floor((_TOTAL_IN_GAME_SECONDS % 3600) / 60) != 0 ? fmt(' %iмин.', Math.floor((_TOTAL_IN_GAME_SECONDS % 3600) / 60)) : '',
+                    _TOTAL_IN_GAME_SECONDS % 60 != 0 ? fmt(' %iсек.', _TOTAL_IN_GAME_SECONDS % 60) : ' --:--:--'
+                ))
+                new Element().getElementByID('m_serverLayer-timer-label').setText('')
+                this.settings().set('game->::time::current-full', _TOTAL_IN_GAME_SECONDS)
+            },
+
+            onPreview: (isOpen) => {
+                let m_layer = new Element().getElementByID('m_serverLayer')
+                let m_node = new Element().getElementByID('m_serverLayerNode')
+
+                if(!isOpen) {
+                    m_layer.setAnimation(Animation.fadeOutColor(), 'linear', 0.15)
+                    m_layer.removeClass('m_pointerEventsAll')
+                    m_node.setAnimation(Animation.fadeOutScale(), 'linear', 0.15)
+                } else {
+                    m_layer.setAnimation(Animation.fadeInColor(), 'linear', 0.15)
+                    m_layer.addClass('m_pointerEventsAll')
+                    m_node.setAnimation(Animation.fadeInScale(), 'linear', 0.15)
+                }
+            },
+
+            startTimer: () => {
+                _CURRENT_IN_GAME_SECONDS++
+                _TOTAL_IN_GAME_SECONDS++
+
+                // Логика пересчета
+                if(_CURRENT_IN_GAME_SECONDS > 59) {
+                    _CURRENT_IN_GAME_SECONDS = 0
+                    _CURRENT_IN_GAME_MINUTES++
+                }
+
+                if(_CURRENT_IN_GAME_MINUTES > 59) {
+                    _CURRENT_IN_GAME_MINUTES = 0
+                    _CURRENT_IN_GAME_HOURS++
+                }
+                new Element().getElementByID('m_serverLayer-timer-label').setText(fmt('%02i:%02i:%02i', _CURRENT_IN_GAME_HOURS, _CURRENT_IN_GAME_MINUTES, _CURRENT_IN_GAME_SECONDS))
+            }
+        }
+    }
+
+    
+
+    setLog(logText) {
+        let m_logger = document.getElementById('m_consoleLayer-log-field')
+        m_logger.style['textAlign'] = 'left'
+        m_logger.style['alignContent'] = 'flex-start'
+        m_logger.value += fmt('%s\n', logText)
+        m_logger.scrollTop = m_logger.scrollHeight
+    }
+
+    saveLog(value) {
+        const data = { m_data: value, m_folder: 'logs', m_type: '.log' };
+        const url = fmt('upload.php?%s', new URLSearchParams(data).toString())
+        fetch(url).then(response => response.text())
+        .then(result => {
+            this.setLog(this.getFormatLogString(this.constructor.name, 'Лог сохранен в папку \'logs\''))
+        })
+    }
+
+    getFormatLogString(type, text) {
+        let date = new Date()
+        return fmt('[%s][%s] %s', fmt('%02i.%02i.%04i|%02i:%02i:%02i', date.getDate(), date.getMonth() + 1, date.getFullYear(), date.getHours(), date.getMinutes(), date.getSeconds()), type.toUpperCase(), text)
+    }
+}
+export default new app

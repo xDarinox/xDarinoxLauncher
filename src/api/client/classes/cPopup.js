@@ -1,0 +1,12 @@
+import Element from './cElement.js'
+
+
+export default class Popup {
+    constructor(tag) {
+ 
+    }
+
+    create() {
+        
+    }
+}

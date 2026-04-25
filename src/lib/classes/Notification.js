@@ -1,0 +1,37 @@
+import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
+import Animation from '../../api/client/classes/cAnimation.js'
+import Element from '../../api/client/classes/cElement.js'
+
+let Notification = class {
+    create(type, description, seconds) {
+        if(document.querySelector('.m_notificationLayer') !== null) return
+        else {
+            let m_icon = ''
+            let m_root = new Element().getElementByID('m_root')
+            let m_layer = new Element('layer')
+            m_layer.setClass('m_notificationLayer')
+
+            let m_node = new Element('node')
+            m_node.setClass('m_notificationLayerNode')
+            m_node.addClass(fmt('m_notification-text-%s', type))
+            m_node.setAnimation(Animation.fadeInFromTop(1), 'linear', 0.15)
+        
+            switch(type) {
+                case 'success': m_icon = '<svg class=\'m_notificationIcon\' viewBox=\'0 0 24 24\'><path d=\'M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2zm-1.999 14.413l-3.713-3.705L7.7 11.292l2.299 2.295l5.294-5.294l1.414 1.414l-6.706 6.706z\' fill=\'currentColor\'/></svg>'; break
+                case 'warn': m_icon = '<svg class=\'m_notificationIcon\' viewBox=\'0 0 24 24\'><path d=\'M12.884 2.532c-.346-.654-1.422-.654-1.768 0l-9 17A.999.999 0 0 0 3 21h18a.998.998 0 0 0 .883-1.467L12.884 2.532zM13 18h-2v-2h2v2zm-2-4V9h2l.001 5H11z\' fill=\'currentColor\'/></svg>'; break
+                case 'error': m_icon = '<svg class=\'m_notificationIcon\' viewBox=\'0 0 24 24\'><path d=\'M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6zV\' fill=\'currentColor\'/></svg>'; break
+            }
+            m_node.setHTML(fmt('%s<text>%s</text>', m_icon, description))
+
+            m_layer.addChild(m_node, 'first')
+            m_root.addChild(m_layer, 'last')
+
+            setTimeout(() => {
+                m_node.setAnimation(Animation.fadeInToTop(1), 'linear', 0.15)
+                setTimeout(() => { m_root.removeChild(m_layer) }, 150)
+            }, seconds * 1000)
+        }
+    }
+}
+
+export default new Notification
