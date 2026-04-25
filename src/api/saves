@@ -3,12 +3,12 @@
         "uname": "xDarinox",
         "userID": 1245,
         "accountID": 12,
-        "password": "$2y$10$xuwdmJDipwC3mONeg1hnYOjXCwLDZAs4W618cwg.RGkDrSapfu6US",
+        "password": "$2y$10$1R1D7GGI4OGFVNuGJ0AeYO4GvX.Ca090AfQ6\/RIWZTMe18J2kwGyK",
         "email": "a21pdHJvZmFub3YyMDA2QGdtYWlsLmNvbQ",
         "game": {
-            "seconds": 517,
-            "points": 0,
-            "sessions": 0,
+            "seconds": 510,
+            "points": 440,
+            "sessions": 222,
             "total-points-collected": 1
         }
     },
@@ -22,21 +22,13 @@
         "architecture": "x64",
         "platform-version": 10,
         "php-parser-path": "src\\api\\client\\scripts\\parser.exe",
-        "app-root-path": "C:\\Users\\Kirill\\Downloads\\xDarinox-Manger-v1.00",
+        "app-root-path": "C:\\Users\\Kirill\\Downloads\\xDarinox-Manger-v1.00\\test",
         "appPathEXE": "C:\\Users\\Kirill\\Downloads\\xDarinox-Manger-v1.00\\xDarinoxLauncher.exe",
         "gamePathEXE": "C:\\Users\\Kirill\\Downloads\\xDarinox-Manger-v1.00\\game\\xDarinoxGDPS.exe",
         "game-data-folder-path": "C:\\Users\\Kirill\\AppData\\Local\\xDarinoxGDPS",
         "command_line_switches": {
-            "disable-gpu": "",
-            "disable-features": "ChromeWhatsNewUI"
-        },
-        "context_menu": {
-    "enable_menu": false,
-    "navigation": false,
-    "print": false,
-    "view_source": false,
-    "open_in_external_browser": false
-}
+            "disable-gpu": ""
+        }
     },
     "settings": {
         "windowSizes": [
@@ -51,12 +43,12 @@
             0,
             0
         ],
-        "isDisableMaximizeButton": null,
-        "isCenterLaunch": null,
-        "isFullscreen": null,
-        "isMaximumSize": null,
-        "isLaunchOnTop": null,
+        "isDisableMaximizeButton": true,
+        "isCenterLaunch": true,
+        "isFullscreen": false,
+        "isMaximumSize": false,
+        "isLaunchOnTop": false,
         "interface-font": "-",
-        "isDevTools": null
+        "isDevTools": false
     }
 }
